@@ -10,8 +10,8 @@
     />
     <button>Submit</button>
   </form>
-  <button @click="markAllDone">Mark All done</button>
-  <button @click="deleteAll">Clear All</button>
+  <button @click="markAllDone">Mark All Completed</button>
+  <button @click="deleteAll">Delete All</button>
   <button @click="removeCompleted">Clear Completed</button>
 
   <ul>
@@ -43,7 +43,6 @@ export default {
         done: false,
         content: newTodo.value,
       });
-      console.log(todos);
       newTodo.value = "";
     }
 
@@ -56,19 +55,47 @@ export default {
     }
 
     function markAllDone() {
-      todos.value.forEach((todo) => (todo.done = !todo.done));
+      todos.value.forEach((todo) => {
+        if (todo.done == false) {
+          return (todo.done = !todo.done);
+        }
+      });
     }
 
     function deleteAll() {
       todos.value = [];
     }
-    function removeCompleted() {}
 
-    function showAllTodo() {}
+    function removeCompleted() {
+      for (let i = todos.value.length - 1; i >= 0; i--) {
+        if (todos.value[i].done == true) {
+          todos.value.splice(i, 1);
+        }
+      }
+    }
 
-    function showActiveTodo() {}
+    function showAllTodo() {
+      todos.value.forEach((todo) => {
+        console.log(todo.content);
+      });
+    }
 
-    function showCompletedTodo() {}
+    function showActiveTodo() {
+      todos.value.forEach((todo) => {
+        if (todo.done == false) {
+          console.log(todo.content);
+        }
+      });
+    }
+
+    function showCompletedTodo() {
+      todos.value.forEach((todo) => {
+        if (todo.done == true) {
+          console.log(todo.content);
+        }
+      });
+    }
+
     return {
       newTodo,
       todos,
