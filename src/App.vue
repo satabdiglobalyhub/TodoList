@@ -1,32 +1,35 @@
 <template>
-  <form @submit.prevent="addNewTodo">
-    <label>todos</label>
-    <input
-      type="text"
-      name="newTodo"
-      v-model="newTodo"
-      placeholder="Enter Task"
-      required
-    />
-    <button>Submit</button>
-  </form>
-  <button @click="markAllDone">Mark All Completed</button>
-  <button @click="deleteAll">Delete All</button>
-  <button @click="removeCompleted">Clear Completed</button>
+  <div class="container">
+    <form @submit.prevent="addNewTodo">
+      <label><h1>todos</h1> </label>
+      <input
+        type="text"
+        name="newTodo"
+        v-model="newTodo"
+        placeholder="Enter Task"
+        class="input"
+        required
+      />
+      <button class="submit">Submit</button>
+    </form>
+    <button @click="markAllDone">Mark All Completed</button>
+    <button @click="deleteAll">Delete All</button>
+    <button @click="removeCompleted">Clear Completed</button>
 
-  <ul>
-    <li v-for="(todo, index) in todos" :key="todo.id" class="todo">
-      <h3 :class="{ done: todo.done }" @dblclick="EditTodo(todo)">
-        {{ todo.content }}
-        <button @click="toggleDone(todo)">Completed</button>
-        <button @click="removeTodo(index)">Delete</button>
-      </h3>
-    </li>
-  </ul>
+    <ul>
+      <li v-for="(todo, index) in todos" :key="todo.id" class="todo">
+        <h3 :class="{ done: todo.done }" @dblclick="EditTodo(todo)">
+          {{ todo.content }}
+          <button @click="toggleDone(todo)">Completed</button>
+          <button @click="removeTodo(index)">Delete</button>
+        </h3>
+      </li>
+    </ul>
 
-  <button @click="showAllTodo">All</button>
-  <button @click="showActiveTodo">Active</button>
-  <button @click="showCompletedTodo">Completed</button>
+    <button @click="showAllTodo">All</button>
+    <button @click="showActiveTodo">Active</button>
+    <button @click="showCompletedTodo">Completed</button>
+  </div>
 </template>
 
 <script>
@@ -44,6 +47,7 @@ export default {
         content: newTodo.value,
       });
       newTodo.value = "";
+      // console.log(todos);
     }
 
     function toggleDone(todo) {
@@ -114,10 +118,27 @@ export default {
 </script>
 
 <style>
-.todo {
-  cursor: pointer;
+.container {
+  max-width: 420px;
+  margin: 30px auto;
+  background: white;
+  text-align: left;
+  padding: 40px;
+  border-radius: 10px;
 }
 .done {
   text-decoration: line-through;
+}
+form {
+  margin-bottom: 20px;
+}
+.input {
+  padding: 10px;
+}
+.submit {
+  background: black;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
 }
 </style>
