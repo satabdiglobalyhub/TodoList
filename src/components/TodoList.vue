@@ -2,14 +2,14 @@
   <div>
     <button @click="logtodo">logtodo</button>
   </div>
-  <ul>
-    <!-- <li v-for="(todo, index) in todo" :key="todo.id" class="todo">
+  <ul v-if="Newtodos.length">
+    <li v-for="(todo, index) in Newtodos" :key="index" class="todo">
       <h3 :class="{ done: todo.done }" @dblclick="editTodo(todo)">
         {{ todo.content }}
         <button @click="toggleDone(todo)">Completed</button>
         <button @click="removeTodo(index)">Delete</button>
       </h3>
-    </li> -->
+    </li>
   </ul>
 </template>
 
@@ -18,35 +18,43 @@ export default {
   setup() {
     let todos = "";
     let Newtodos = [];
-    todos = localStorage.getItem("todos");
-    const obj = JSON.parse(todos);
-    const length = Object.keys(obj).length;
+
     function logtodo() {
-      console.log(obj);
+      todos = localStorage.getItem("todos");
+      const obj = JSON.parse(todos);
+      let list = [];
+      for (let i = 0; i < obj.length; i++) {
+        console.log(obj[i].content);
+        list.push(obj[i].content);
+      }
+      return list;
+
+      const length = Object.keys(obj).length;
       console.log(length);
     }
-    // function toggleDone(todo) {
-    //   todo.done = !todo.done;
-    // }
 
-    // function removeTodo(index) {
-    //   todo.value.splice(index, 1);
-    // }
+    function toggleDone(todo) {
+      todo.done = !todo.done;
+    }
 
-    // function editTodo(todo) {
-    //   const newContent = prompt("Enter new content", todo.content);
-    //   if (newContent !== null && newContent !== "") {
-    //     todo.content = newContent;
-    //   }
-    // }
+    function removeTodo(index) {
+      Newtodos.splice(index, 1);
+    }
+
+    function editTodo(todo) {
+      const newContent = prompt("Enter new content", todo.content);
+      if (newContent !== null && newContent !== "") {
+        todo.content = newContent;
+      }
+    }
 
     return {
       todos,
       Newtodos,
       logtodo,
-      // toggleDone,
-      // removeTodo,
-      // editTodo,
+      toggleDone,
+      removeTodo,
+      editTodo,
     };
   },
 };

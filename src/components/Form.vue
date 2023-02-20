@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 export default {
   setup() {
@@ -35,12 +35,10 @@ export default {
       localStorage.setItem("todos", JSON.stringify(todos.value));
     }
 
-  
     return {
       newTodo,
       todos,
       addNewTodo,
-      onMounted,
     };
   },
 };
