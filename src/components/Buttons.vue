@@ -1,10 +1,17 @@
 <template>
-  <button @click="markAllDone">Mark All Completed</button>
-  <button @click="deleteAll">Delete All</button>
-  <button @click="removeCompleted">Clear Completed</button>
-  <button @click="showAllTodo">Show All</button>
-  <button @click="showActiveTodo">All Active</button>
-  <button @click="showCompletedTodo">All Completed</button>
+  <div>
+    <div class="buttons-complete">
+      <button @click="markAllDone">Mark All Completed</button>
+      <button @click="removeCompleted" class="buttons-complete--clear">
+        Clear Completed
+      </button>
+    </div>
+    <div class="buttons-show">
+      <button @click="showAllTodo">All</button>
+      <button @click="showActiveTodo">Active</button>
+      <button @click="showCompletedTodo">Completed</button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -63,4 +70,35 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.buttons-complete {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  color: black;
+}
+.buttons-complete button {
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+.buttons-show {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+.buttons-show button {
+  margin-right: 10px;
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.buttons-complete button:hover,
+.buttons-show button:hover {
+  color: white;
+  background-color: black;
+}
+</style>

@@ -1,45 +1,57 @@
 <template>
-  <form @submit.prevent="addNewTodo">
-    <label><h1>todos</h1> </label>
-    <input
-      type="text"
-      name="newTodo"
-      v-model="newTodo"
-      placeholder="Enter Task"
-      class="input"
-      required
-    />
-    <button class="submit">Submit</button>
-  </form>
-  <div></div>
+  <div class="form">
+    <form @submit.prevent="addNewTodo">
+      <input
+        type="text"
+        name="newTodo"
+        v-model="newTodo"
+        placeholder="What needs to be done?"
+        class="todo-input"
+        required
+      />
+    </form>
+  </div>
 </template>
 
 <script>
-import { ref } from "vue";
-
 export default {
-  setup() {
-    const newTodo = ref("");
-    const todos = ref([]);
-
-    function addNewTodo() {
-      todos.value.push({
+  data() {
+    return {
+      newTodo: "",
+      todos: {},
+    };
+  },
+  methods: {
+    addNewTodo() {
+      this.todos={
         id: Date.now(),
         done: false,
-        content: newTodo.value,
-      });
-      newTodo.value = "";
-      saveData();
-    }
-    function saveData() {
-      localStorage.setItem("todos", JSON.stringify(todos.value));
-    }
-
-    return {
-      newTodo,
-      todos,
-      addNewTodo,
-    };
+        content: this.newTodo,
+      };
+      this.newTodo = "";
+      this.saveData();
+      this.$emit("updatedTodoList");
+    },
+    saveData() {
+      const todosLists = localStorage.getItem(
+        "todos",
+        JSON.stringify(this.todos)
+      );
+      console.log(todosLists);
+      todosLists.push(this.todos);
+      console.log(updatedTodos);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    },
   },
 };
 </script>
+
+<style>
+.todo-input {
+  width: 100%;
+  padding: 10px 18px;
+  font-size: 18px;
+  margin-bottom: 16px;
+  border: 2px solid #2c3e50;
+}
+</style>
