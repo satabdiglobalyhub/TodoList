@@ -1,48 +1,62 @@
 <template>
   <div class="container">
-    <Form />
-    <TodoList />
-    <Buttons />
+    <h1 class="title">todos</h1>
+    <Form @updatedTodoList="updatedTodoList" />
+    <TodoList :todosList="todosList" @deletedtodosList="todosList" />
+    <Buttons :todosList="todosList" />
   </div>
 </template>
 
 <script>
-import { ref, defineComponent } from "vue";
 import Form from "./components/Form.vue";
 import Buttons from "./components/Buttons.vue";
 import TodoList from "./components/TodoList.vue";
 
-export default defineComponent({
+export default {
   components: {
     Form,
     Buttons,
     TodoList,
   },
-});
+  data() {
+    return {
+      todosList: [],
+    };
+  },
+  mounted() {
+    this.logtodo();
+  },
+  methods: {
+    logtodo() {
+      const savedTodos = localStorage.getItem("todos");
+      if (savedTodos) {
+        this.todosList = JSON.parse(savedTodos);
+      }
+    },
+    updatedTodoList() {
+      this.logtodo();
+    },
+  },
+};
 </script>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+#app {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #2c3e50;
+  margin-top: 60px;
+  font-size: 24px;
+}
 .container {
-  max-width: 420px;
-  margin: 30px auto;
-  background: white;
-  text-align: left;
-  padding: 40px;
-  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto;
 }
-.done {
-  text-decoration: line-through;
-}
-form {
-  margin-bottom: 20px;
-}
-.input {
-  padding: 10px;
-}
-.submit {
-  background: black;
-  color: white;
-  border-radius: 5px;
-  padding: 10px;
+.title {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
 }
 </style>
