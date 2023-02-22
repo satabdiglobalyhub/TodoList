@@ -2,9 +2,7 @@
   <div>
     <div class="buttons-complete">
       <button @click="markAllDone">Mark All Completed</button>
-      <button @click="removeCompleted" class="buttons-complete--clear">
-        Clear Completed
-      </button>
+      <button @click="clearCompleted">Clear Completed</button>
     </div>
     <div class="buttons-show">
       <button @click="showAllTodo">All</button>
@@ -16,58 +14,47 @@
 
 <script>
 export default {
-  setup() {
-    function markAllDone() {
+  methods: {
+    markAllDone() {
       todos.value.forEach((todo) => {
         if (todo.done == false) {
           return (todo.done = !todo.done);
         }
       });
-    }
+    },
 
-    function deleteAll() {
-      localStorage.clear();
-    }
-
-    function removeCompleted() {
+    clearCompleted() {
       for (let i = todos.value.length - 1; i >= 0; i--) {
         if (todos.value[i].done == true) {
           todos.value.splice(i, 1);
         }
       }
-    }
+    },
 
-    function showAllTodo() {
+    showAllTodo() {
       todos.value.forEach((todo) => {
         console.log(todo.content);
       });
-    }
+    },
 
-    function showActiveTodo() {
+    showActiveTodo() {
       todos.value.forEach((todo) => {
         if (todo.done == false) {
           console.log(todo.content);
         }
       });
-    }
+    },
 
-    function showCompletedTodo() {
+    showCompletedTodo() {
       todos.value.forEach((todo) => {
         if (todo.done == true) {
           console.log(todo.content);
         }
       });
     }
-    return {
-      markAllDone,
-      deleteAll,
-      removeCompleted,
-      showAllTodo,
-      showActiveTodo,
-      showCompletedTodo,
-    };
-  },
+  }
 };
+
 </script>
 
 <style>

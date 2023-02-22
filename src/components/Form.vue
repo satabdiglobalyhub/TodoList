@@ -1,6 +1,6 @@
 <template>
-  <div class="form">
-    <form @submit.prevent="addNewTodo">
+  <div>
+    <form @submit.prevent="addNewTodo" class="form">
       <input
         type="text"
         name="newTodo"
@@ -9,6 +9,7 @@
         class="todo-input"
         required
       />
+      <button class="todo-submit">Submit</button>
     </form>
   </div>
 </template>
@@ -23,7 +24,7 @@ export default {
   },
   methods: {
     addNewTodo() {
-      this.todos={
+      this.todos = {
         id: Date.now(),
         done: false,
         content: this.newTodo,
@@ -33,25 +34,40 @@ export default {
       this.$emit("updatedTodoList");
     },
     saveData() {
-      const todosLists = localStorage.getItem(
-        "todos",
-        JSON.stringify(this.todos)
-      );
-      console.log(todosLists);
+      let todosLists = JSON.parse(localStorage.getItem("todos")) || [];
       todosLists.push(this.todos);
-      console.log(updatedTodos);
-      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+      localStorage.setItem("todos", JSON.stringify(todosLists));
     },
   },
 };
 </script>
 
 <style>
-.todo-input {
+.form {
+  display: flex;
   width: 100%;
+  border: 3px solid #2c3e50;
+}
+.todo-input {
+  width: 80%;
   padding: 10px 18px;
   font-size: 18px;
-  margin-bottom: 16px;
-  border: 2px solid #2c3e50;
+  border: none;
+}
+.todo-input:focus {
+  outline: none;
+}
+.todo-submit {
+  width: 20%;
+  border-left: 3px solid #2c3e50;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+  font-size: 20px;
+  background-color: white;
+}
+.todo-submit:hover {
+  color: white;
+  background-color: black;
 }
 </style>
