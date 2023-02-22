@@ -14,13 +14,26 @@
 
 <script>
 export default {
+  data() {
+    return {
+      todos: "",
+      Newtodos: [],
+    };
+  },
   methods: {
     markAllDone() {
-      todos.value.forEach((todo) => {
-        if (todo.done == false) {
-          return (todo.done = !todo.done);
+      const todos=JSON.parse((localStorage.getItem("todos")))
+      if (!Array.isArray(todos)) {
+    return;
+      }
+      todos.forEach(todo => {
+        if (!todo.done) {
+          todo.done = !todo.done;
         }
       });
+      console.log(todos)
+      localStorage.setItem("todos", JSON.stringify(todos));
+      this.$emit("CompletedTodo");
     },
 
     clearCompleted() {
