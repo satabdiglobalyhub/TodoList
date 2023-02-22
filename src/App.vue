@@ -2,8 +2,8 @@
   <div class="container">
     <h1 class="title">todos</h1>
     <Form @updatedTodoList="updatedTodoList" />
-    <TodoList :todosList="todosList" @deletedtodosList="todosList" />
-    <Buttons :todosList="todosList" />
+    <TodoList  @deletedtodosList="todosList" :todosList="todosList"/>
+    <Buttons @CompletedTodo="updatedTodoList" :todosList="todosList"/>
   </div>
 </template>
 
