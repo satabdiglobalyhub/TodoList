@@ -2,8 +2,8 @@
   <div class="container">
     <h1 class="title">todos</h1>
     <Form @updatedTodoList="updatedTodoList" />
-    <TodoList  @deletedtodosList="todosList" :todosList="todosList"/>
-    <Buttons @CompletedTodo="updatedTodoList" :todosList="todosList"/>
+    <TodoList @deletedtodosList="todosList" :todosList="todosList" />
+    <Buttons @CompletedTodo="updatedTodoList" :todosList="todosList" />
   </div>
 </template>
 
@@ -11,12 +11,14 @@
 import Form from "./components/Form.vue";
 import Buttons from "./components/Buttons.vue";
 import TodoList from "./components/TodoList.vue";
+import MyButton from "./components/MyButton.vue";
 
 export default {
   components: {
     Form,
     Buttons,
     TodoList,
+    MyButton,
   },
   data() {
     return {
@@ -27,6 +29,9 @@ export default {
     this.logtodo();
   },
   methods: {
+    handleClick() {
+      console.log("test");
+    },
     logtodo() {
       const savedTodos = localStorage.getItem("todos");
       if (savedTodos) {

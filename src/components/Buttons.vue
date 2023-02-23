@@ -1,19 +1,24 @@
 <template>
-  <div>
-    <div class="buttons-complete">
-      <button @click="markAllDone">Mark All Completed</button>
-      <button @click="clearCompleted">Clear Completed</button>
-    </div>
-    <div class="buttons-show">
-      <button @click="showAllTodo">All</button>
-      <button @click="showActiveTodo">Active</button>
-      <button @click="showCompletedTodo">Completed</button>
+  <div v-if="todosList.length > 1">
+    <div>
+      <div class="buttons-complete">
+        <button @click="markAllDone">Mark All Completed</button>
+        <button @click="clearCompleted">Clear Completed</button>
+      </div>
+      <div class="buttons-show">
+        <button @click="showAllTodo">All</button>
+        <button @click="showActiveTodo">Active</button>
+        <button @click="showCompletedTodo">Completed</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    todosList: Array,
+  },
   data() {
     return {
       todos: "",
@@ -22,52 +27,50 @@ export default {
   },
   methods: {
     markAllDone() {
-      const todos=JSON.parse((localStorage.getItem("todos")))
-      if (!Array.isArray(todos)) {
-    return;
-      }
-      todos.forEach(todo => {
-        if (!todo.done) {
-          todo.done = !todo.done;
-        }
+      const todos = JSON.parse(localStorage.getItem("todos"));
+      const allDone = todos.every((todos) => todos.done);
+      todos.forEach((todos) => {
+        todos.done = !allDone;
       });
-      console.log(todos)
       localStorage.setItem("todos", JSON.stringify(todos));
       this.$emit("CompletedTodo");
     },
 
     clearCompleted() {
-      for (let i = todos.value.length - 1; i >= 0; i--) {
-        if (todos.value[i].done == true) {
-          todos.value.splice(i, 1);
+      const todos = JSON.parse(localStorage.getItem("todos"));
+      for (let i = todos.length - 1; i >= 0; i--) {
+        if (todos[i].done == true) {
+          todos.splice(i, 1);
         }
       }
+      localStorage.setItem("todos", JSON.stringify(todos));
+      this.$emit("CompletedTodo");
     },
 
     showAllTodo() {
-      todos.value.forEach((todo) => {
-        console.log(todo.content);
-      });
+      const todos = JSON.parse(localStorage.getItem("todos"));
     },
 
     showActiveTodo() {
-      todos.value.forEach((todo) => {
-        if (todo.done == false) {
-          console.log(todo.content);
+      const todos = JSON.parse(localStorage.getItem("todos"));
+      todos.forEach((todos) => {
+        if (todos.done == false) {
+          todos = todos.content;
         }
       });
+      
     },
 
     showCompletedTodo() {
-      todos.value.forEach((todo) => {
-        if (todo.done == true) {
-          console.log(todo.content);
+      const todos = JSON.parse(localStorage.getItem("todos"));
+      todos.forEach((todos) => {
+        if (todos.done == true) {
+          console.log("completed-", todos.content);
         }
       });
-    }
-  }
+    },
+  },
 };
-
 </script>
 
 <style>

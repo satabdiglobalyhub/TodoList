@@ -1,6 +1,6 @@
 <template>
-  <div class="list">
-    <div v-if="todosList.length">
+  <div v-if="todosList.length" class="list">
+    <div>
       <div v-for="(todo, index) in todosList" :key="index" class="todo">
         <h3 :class="{ done: todo.done }">
           <input
@@ -11,17 +11,17 @@
           <label @dblclick="editTodo(todo)" :class="{ completed: todo.done }">
             {{ todo.content }}
           </label>
-          <button
-
-            @click="deleteTodo(index)"
-            class="button-delete"
-          >
+          <button @click="deleteTodo(index)" class="button-delete">
             Delete
           </button>
         </h3>
       </div>
       <div class="deleteAll">
-        <button v-if="todosList.length > 1" @click="deleteAllTodo()" class="button-deleteAll">
+        <button
+          v-if="todosList.length > 1"
+          @click="deleteAllTodo()"
+          class="button-deleteAll"
+        >
           Delete All
         </button>
       </div>
